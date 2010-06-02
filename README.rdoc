@@ -1,4 +1,4 @@
-= Scanty, a really small blog
+= GAE version of Scanty, a really small blog
 
 == Overview
 
@@ -7,6 +7,8 @@ http://adam.blog.heroku.com
 
 It is not a blogging engine, but it's small and easy to modify, so it could be
 the starting point for your blog, too.
+
+This clone is a GAE version which can be hosted by google.
 
 == Features
 
@@ -17,13 +19,15 @@ the starting point for your blog, too.
 * Atom feed
 * Comments via Disqus
 * Web framework = Sinatra
-* ORM = Sequel
+* ORM = DataMapper (Original Sequel)
 
 == Dependencies
 
+  $ gem install google-appengine
   $ gem install sinatra
+  $ gem install dm-appengin
 
-Sequel, Maruku, and Syntax are all vendored.
+ Maruku, and Syntax are all vendored.
 
 == Setup
 
@@ -34,9 +38,9 @@ something other than the default.
 
 Then run the server:
 
-  $ ruby main.rb
+  $ dev_appserver.rb .
 
-And visit: http://localhost:4567
+And visit: http://localhost:8080
 
 Log in with the password you selected, then click New Post.  The rest should be
 self-explanatory.
@@ -45,33 +49,21 @@ In production, you'll probably want to run "rake start" to start (and restart)
 the server.  Change the value of "port" at the top of the Rakefile to run on a
 different port.
 
-== Database
-
-The default is a SQLite file named blog.db.  To use something else, set
-DATABASE_URL in your environment when running the app, i.e.:
-
-  $ DATABASE_URL='mysql://localhost/myblog' ruby main.rb
-
-Or, modify the Sequel.connect statement at the top of main.rb.
-
-The database will be created automatically when the server is executed.
-
 == Comments
 
 There are no comments by default.  If you wish to activate comments, create an
 account and a website on Disqus (disqus.com) and enter the website shortname as
 the :disqus_shortname value in the Blog config struct.
 
-== Import data
-
-Christopher Swenson has a Wordpress importer: http://github.com/swenson/scanty_wordpress_import
-
-Other kinds of data can be imported easily, take a look at the rake task :import for an example of loading from a YAML file with field names that match the database schema.
-
 == Customize
 
 There are no themes or settings beyond the basic ones in the Blog struct.  Just
 edit the CSS or the code as you see fit.
+
+== Deploy
+
+Change your app name in config.ru and run:
+  $ appcfg.rb update .
 
 == Meta
 
@@ -84,4 +76,8 @@ Released under the MIT License: http://www.opensource.org/licenses/mit-license.p
 http://github.com/adamwiggins/scanty
 
 http://adam.blog.heroku.com
+
+http://github.com/tdsparrow/scanty
+http://tdtitle.appspot.com
+
 
