@@ -1,11 +1,13 @@
 require 'rubygems'
+require 'appengine-rack'
 require 'sinatra'
 
-Sinatra::Application.default_options.merge!(
-  :views => File.join(File.dirname(__FILE__), 'views'),
-  :run => false,
-  :env => ENV['RACK_ENV']
-)
+AppEngine::Rack.configure_app(
+    :application => "tdtitle",
+    :precompilation_enabled => true,
+    :version => "1")
 
 require 'main'
-run Sinatra.application
+
+use ::Rack::Reloader
+run Sinatra::Application
