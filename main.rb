@@ -13,10 +13,10 @@ configure do
 		:title => 'Try It Till Less Enthusiasm',
 		:author => 'Li Ren',
 		:url_base => 'http://localhost:4567/',
-		:admin_password => '112413',
+		:admin_password => 'changeme',
 		:admin_cookie_key => 'scanty_admin',
-		:admin_cookie_value => '51d6d39d83jd2idm',
-		:disqus_shortname => 'tdtitle'
+		:admin_cookie_value => '51d6d39d83dadfewfjd2idm',
+		:disqus_shortname => ''
 	)
 end
 
