@@ -1,8 +1,13 @@
+
 require 'rubygems'
+require 'mail'
 require 'sinatra'
+set :app_file, __FILE__
+
 
 #$LOAD_PATH.unshift File.dirname(__FILE__) + '/vendor/sequel'
 require 'dm-core'
+
 
 configure do
 	#Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog.db')
@@ -15,6 +20,7 @@ configure do
 		:url_base => 'http://localhost:4567/',
 		:admin_password => 'changeme',
 		:admin_cookie_key => 'scanty_admin',
+                :publish_mail => 'from@mail.com',
 		:admin_cookie_value => '51d6d39d83dadfewfjd2idm',
 		:disqus_shortname => ''
 	)
@@ -81,6 +87,20 @@ end
 
 get '/rss' do
 	redirect '/feed', 301
+end
+
+post '/_ah/mail/:to' do
+	m = Mail.new(request.env["rack.input"].read)
+	return if m.from.to_s != Blog.publish_mail
+        return if m.subject.nil?
+
+        title, tags =  m.subject.split('|')
+        tags ||= ' '
+        c = m.parts.find { |p| p.content_type =~ /plain/ } 
+
+        post = Post.new :title => title, :tags => tags.squeeze(' ').split(/[ ,]/), :body => c.body.raw_source, :created_at => Time.now, :slug => Post.make_slug(title)
+        post.save
+        
 end
 
 ### Admin
