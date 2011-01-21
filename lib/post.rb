@@ -41,7 +41,9 @@ class Post
 	end
 
 	def linked_tags
-		tags.inject([]) do |accum, tag|
+                tags.nil? || t = tags.dup
+                t ||= []
+                t.inject([]) do |accum, tag|
 			accum << "<a href=\"/past/tags/#{tag}\">#{tag}</a>"
 		end.join(" ")
 	end

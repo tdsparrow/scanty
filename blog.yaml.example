@@ -1,0 +1,8 @@
+title : 'Try It Till Less Enthusiasm',
+author : 'Li Ren',
+url_base : 'http://localhost:4567/',
+admin_password : 'changeme',
+admin_cookie_key : 'scanty_admin',
+publish_mail : 'from@gmail.com',
+admin_cookie_value : '51d6d39d83dadfewfjd2idm',
+disqus_shortname : ''

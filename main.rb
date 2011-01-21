@@ -2,6 +2,8 @@
 require 'rubygems'
 require 'tmail'
 require 'sinatra'
+
+#help rack to auto load
 set :app_file, __FILE__
 
 
@@ -13,18 +15,14 @@ configure do
   #Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://blog.db')
   DataMapper.setup(:default, "appengine://auto")
 
-  require 'ostruct'
-  Blog = OpenStruct.new(
-                        :title => 'Try It Till Less Enthusiasm',
-                        :author => 'Li Ren',
-                        :url_base => 'http://localhost:4567/',
-                        :admin_password => 'changeme',
-                        :admin_cookie_key => 'scanty_admin',
-                        :publish_mail => 'from@gmail.com',
-                        :admin_cookie_value => '51d6d39d83dadfewfjd2idm',
-                        :disqus_shortname => ''
-                        )
+  Blog = YAML::load_file("./blog.yaml")
+
+  def Blog.method_missing(m, *args, &block)
+    return self[m.to_s]
+  end
+  
 end
+
 
 error do
   e = request.env['sinatra.error']
@@ -35,7 +33,7 @@ end
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/lib')
 require 'post'
-require 'gaelog'
+#require 'gaelog'
 
 helpers do
   def admin?
@@ -50,6 +48,7 @@ end
 layout 'layout'
 
 ### Public
+
 
 get '/' do
   posts = Post.all(:order => [:created_at.desc], :limit => 10)

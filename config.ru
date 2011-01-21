@@ -2,10 +2,10 @@ require 'rubygems'
 require 'appengine-rack'
 require 'sinatra'
 
-AppEngine::Rack.configure_app(
-    :application => "tdtitle",
-    :precompilation_enabled => true,
-    :version => "1")
+#AppEngine::Rack.configure_app(
+#    :application => "tdtitle",
+#    :precompilation_enabled => true,
+#    :version => "1")
 
 require 'main'
 
