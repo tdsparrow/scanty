@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'spec'
-require 'sequel'
+require 'dm-core'
 
 Sequel.sqlite
 
