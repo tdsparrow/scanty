@@ -28,6 +28,11 @@ a {
 	color: #828170;
 }
 
+img {
+	max-width: 100%;
+	height: auto;
+}
+
 a:hover {
 	text-decoration: none;
 }
